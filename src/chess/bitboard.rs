@@ -1,3 +1,5 @@
+use super::types::NUM_FILE;
+
 pub struct Bitboard (
   pub u64
 );

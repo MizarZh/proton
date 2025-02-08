@@ -1,22 +1,25 @@
-pub const NUM_PIECE: usize = 15;
+
+
+pub const NUM_PIECE: usize = 14;
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+#[repr(u8)]
 pub enum PIECE {
-  WHITE_PAWN,
-  WHITE_KNIGHT,
-  WHITE_BISHOP,
-  WHITE_ROOK,
-  WHITE_QUEEN,
-  WHITE_KING,
-  BLACK_PAWN = 8,
-  BLACK_KNIGHT,
-  BLACK_BISHOP,
-  BLACK_ROOK,
-  BLACK_QUEEN,
-  BLACK_KING,
-  NO_PIECE,
+  WP,
+  WN,
+  WB,
+  WR,
+  WQ,
+  WK,
+  BP,
+  BN,
+  BB,
+  BR,
+  BQ,
+  BK,
 }
 
 pub const NUM_PIECE_TYPE: usize = 6;
-pub enum PIECE_TYPE {
+pub enum PieceType {
   PAWN,
   KNIGHT,
   BISHOP,
@@ -27,7 +30,7 @@ pub enum PIECE_TYPE {
 
 pub const NUM_SQUARE: usize = 64;
 #[rustfmt::skip]
-pub enum PIECE_TYPE {
+pub enum SQUARE {
   A1, B1, C1, D1, E1, F1, G1, H1,
   A2, B2, C2, D2, E2, F2, G2, H2,
   A3, B3, C3, D3, E3, F3, G3, H3,
@@ -66,5 +69,5 @@ pub enum RANK {
 pub const NUM_COLOR: usize = 2;
 pub enum COLOR {
   WHITE,
-  BLACK
+  BLACK,
 }
