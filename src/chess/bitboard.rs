@@ -1,10 +1,17 @@
-use super::types::NUM_FILE;
+use super::squares::{NUM_FILE, NUM_RANK, TOTAL_SQUARE};
 
-pub struct Bitboard (
-  pub u64
-);
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
+pub struct Bitboard(pub u64);
 
-pub const FILE_MASK: [Bitboard; NUM_FILE] = [
+impl Bitboard {}
+
+macro_rules! bitboard_array {
+  ($($val:expr),* $(,)?) => {
+      [$(Bitboard($val)),*]  // Expands into a fixed-size array
+  };
+}
+
+pub const FILE_MASK: [Bitboard; NUM_FILE] = bitboard_array![
   0x101010101010101,
   0x202020202020202,
   0x404040404040404,
@@ -15,7 +22,7 @@ pub const FILE_MASK: [Bitboard; NUM_FILE] = [
   0x8080808080808080,
 ];
 
-pub const RANK_MASK: [Bitboard; NUM_RANK] = [
+pub const RANK_MASK: [Bitboard; NUM_RANK] = bitboard_array![
   0xff,
   0xff00,
   0xff0000,
@@ -27,7 +34,7 @@ pub const RANK_MASK: [Bitboard; NUM_RANK] = [
 ];
 
 #[rustfmt::skip]
-pub const SQUARE_MASK: [Bitboard; NUM_SQUARE] = [
+pub const SQUARE_MASK: [Bitboard; TOTAL_SQUARE] = bitboard_array![
   0x1, 0x2, 0x4, 0x8,
   0x10, 0x20, 0x40, 0x80,
   0x100, 0x200, 0x400, 0x800,
@@ -47,6 +54,5 @@ pub const SQUARE_MASK: [Bitboard; NUM_SQUARE] = [
   0x0
 ];
 
-pub const WHITE_SQUIRE_MASK: Bitboard = 0x55AA55AA55AA55AA;
-pub const BLACK_SQUARE_MASK: Bitboard = 0xAA55AA55AA55AA55;
-
+pub const WHITE_SQUIRE_MASK: Bitboard = Bitboard(0x55AA55AA55AA55AA);
+pub const BLACK_SQUARE_MASK: Bitboard = Bitboard(0xAA55AA55AA55AA55);

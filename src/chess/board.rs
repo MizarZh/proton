@@ -1,5 +1,7 @@
 use super::bitboard::Bitboard;
-use super::types::{NUM_COLOR, NUM_PIECE};
+use super::pieces::NUM_PIECE;
+use super::colors::NUM_COLOR;
+
 
 pub struct Board {
   piece_bitboards: [Bitboard; NUM_PIECE],
