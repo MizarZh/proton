@@ -1,9 +1,54 @@
-use super::squares::{NUM_FILE, NUM_RANK, TOTAL_SQUARE};
+use super::squares::{NUM_FILE, NUM_RANK, TOTAL_SQUARE, NUM_SQUARE};
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 pub struct Bitboard(pub u64);
 
-impl Bitboard {}
+impl Bitboard {
+  fn get_lsb(bb: Bitboard) -> u32 {
+    assert_eq!(bb.0, 0);
+    bb.0.trailing_zeros()
+  }
+
+  fn get_msb(bb: Bitboard) -> u32 {
+    assert_eq!(bb.0, 0);
+    bb.0.leading_zeros()
+  }
+
+  fn pop_lsb(bb: &mut Bitboard) -> u32 {
+    let lsb = Bitboard::get_lsb(*bb);
+    (*bb).0 &= (*bb).0 - 1;
+    lsb
+  }
+
+  fn pop_msb(bb: &mut Bitboard) -> u32 {
+    let msb = Bitboard::get_msb(*bb);
+    (*bb).0 ^= 1u64 << msb;
+    msb
+  }
+
+  fn test_bit(bb: Bitboard, i: usize) -> bool {
+    assert!(i < NUM_SQUARE);
+    bb.0 & (1u64 << i) != 0
+  }
+
+  fn set_bit(bb: &mut Bitboard, i: usize) {
+    assert!(Bitboard::test_bit(*bb, i));
+    (*bb).0 ^= 1u64 << i;
+  }
+
+  fn clear_bit(bb: &mut Bitboard, i: usize) {
+    assert!(!Bitboard::test_bit(*bb, i));
+    (*bb).0 ^= 1u64 << i;
+  }
+
+  fn several(bb: Bitboard) -> bool {
+    bb.0 & (bb.0 - 1) != 0
+  }
+
+  fn onlyOne(bb: Bitboard) -> bool {
+    bb.0 != 0 && !Bitboard::several(bb)
+  }
+}
 
 macro_rules! bitboard_array {
   ($($val:expr),* $(,)?) => {
